@@ -9,10 +9,8 @@ sudo apt-get update
 echo "********************************************************************************************"
 echo "	=> INSTALL PYCHARM 		"
 echo "********************************************************************************************"
-echo "deb http://ppa.launchpad.net/viktor-krivak/pycharm/ubuntu zesty main" | sudo tee /etc/apt/sources.list.d/pycharm-ide.list
-wget -q -O - http://archive.getdeb.net/getdeb-archive.key | sudo apt-key add -
 sudo apt-get update
-sudo apt-get install pycharm
+sudo snap install pycharm-community --classic
 
 echo "********************************************************************************************"
 echo "	=> INSTALL SPOTIFY 		"
