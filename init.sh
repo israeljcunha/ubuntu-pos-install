@@ -4,7 +4,7 @@ echo "**************************************************************************
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt-get -f install
-sudo apt-get update  
+sudo apt-get update
 
 echo "********************************************************************************************"
 echo "	=> INSTALL PYCHARM 		"
@@ -80,6 +80,9 @@ echo "**************************************************************************
 sudo apt-get install git
 sudo apt-get update
 
-
-
-
+echo "********************************************************************************************"
+echo "	=> INSTALL VMWARE 		"
+echo "********************************************************************************************"
+wget https://download3.vmware.com/software/player/file/VMware-Player-14.1.1-7528167.x86_64.bundle?HashKey=d9f196c2c516c5faf9570b7cb258c705&params=%7B%22sourcefilesize%22%3A%22110.47+MB%22%2C%22dlgcode%22%3A%22PLAYER-1411%22%2C%22languagecode%22%3A%22en%22%2C%22source%22%3A%22DOWNLOADS%22%2C%22downloadtype%22%3A%22manual%22%2C%22eula%22%3A%22N%22%2C%22downloaduuid%22%3A%22f8e4679e-5132-471a-97cb-c52dc4e24310%22%2C%22purchased%22%3A%22N%22%2C%22dlgtype%22%3A%22Product+Binaries%22%2C%22productversion%22%3A%2214.1.1%22%2C%22productfamily%22%3A%22VMware+Workstation+Player%22%7D&AuthKey=1516058597_0465f2c6072703b0f72fc1a957605605
+sudo chmod 777 VMware-Player-14.1.1-7528167.x86_64.bundle
+sudo ./VMware-Player-14.1.1-7528167.x86_64.bundle
