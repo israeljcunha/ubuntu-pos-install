@@ -1,0 +1,5 @@
+deploy:
+  provider: script
+  script: bash system-update.sh
+  on:
+    branch: master
