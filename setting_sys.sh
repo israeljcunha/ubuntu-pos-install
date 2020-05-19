@@ -270,6 +270,35 @@ DOS(){
 	
 }
 
+
+ActiveFirewall(){
+
+	echo -e "${newlinefinal}" 
+	echo -e "${newline}"
+	echo -e "--------------------------------------------------------------------------"
+	echo -e "							FIREWALL STATUS 							   "
+	echo -e "--------------------------------------------------------------------------"
+	sudo ufw status
+	echo -e "${newline}"
+	echo -e "--------------------------------------------------------------------------"
+	echo -e "							FIREWALL ENABLE 							   "
+	echo -e "--------------------------------------------------------------------------"
+	sudo ufw enable
+	echo -e "${newline}"
+	echo -e "--------------------------------------------------------------------------"
+	echo -e "						FIREWALL ADD SSH RULES							   "
+	echo -e "--------------------------------------------------------------------------"
+	sudo ufw allow ssh
+	echo -e "${newline}"
+	echo -e "--------------------------------------------------------------------------"
+	echo -e "						    FIREWALL FINISH								   "
+	echo -e "--------------------------------------------------------------------------"
+	echo -e "${newlinefinal}" 
+	echo -e "${newline}"
+
+}
+
+
 Internet_Test() {
 
 	ping www.google.com.br -c 1 >/dev/null; 
@@ -292,14 +321,12 @@ Internet_Test() {
 	    echo -e "${newline}"
 	fi
 
-	
-
 }
 
 
 AUTOMATIC_UPDATE(){
 	{
-		sudo apt-get autoremove -y 1&> /dev/null 2&> /dev/null 
+		sudo apt-get autoremove -y 1&> /dev/null 2&> /dev/null
 		echo 10
 		sudo apt-get autoclean -y 1&> /dev/null 2&> /dev/null
 		echo 20
@@ -327,85 +354,63 @@ AUTOMATIC_UPDATE(){
 }
 
 
+
+
 if [ `whoami` = 'root' ]; then
-	OPTION=$(whiptail --title "MENU ACTION" --menu \
-	"Choose the update method." 30 95 20 \
-	"AUTOMATIC-UPDATE" "Shows only the load bar, without interaction." \
-	"DOS-LOAGING" "Show process and load bar, without interaction." \
-	"DOS-TITLE" "Shows all processes separated by title, with interaction." \
-	"DOS" "Show all data, with interaction." \
-	"Orfhan-PPA-Cleanning" "List of applications for installation." \
-	"INSTALL-INIT-SOFTWARES" "List of applications for installation initial." \
-	"SPEED TEST" "Speed Test Network." \
-	3>&1 1>&2 2>&3)
 
-	exitstatus=$?
+	while [[ $exitstatus -le "EXIT" ]]; do
 
-	if [ $exitstatus = 0 ]; then
+		OPTION=$(whiptail --title "MENU ACTION" --menu \
+		"Choose the update method." 30 95 20 \
+		"AUTOMATIC-UPDATE" "Shows only the load bar, without interaction." \
+		"DOS-LOAGING" "Show process and load bar, without interaction." \
+		"DOS-TITLE" "Shows all processes separated by title, with interaction." \
+		"DOS" "Show all data, with interaction." \
+		"Orfhan-PPA-Cleanning" "List of applications for installation." \
+		"INSTALL-INIT-SOFTWARES" "List of applications for installation initial." \
+		"SPEED TEST" "Speed Test Network." \
+		"FIREWALL" "Active firewall and add ssh rules". \
+		"RECOVERY" "Recovery Files By Photorec (testdisk) ". \
+		3>&1 1>&2 2>&3)
 
-		case $OPTION in
+		exitstatus=$?
+		
 
-		"Orfhan-PPA-Cleanning")
-			Orfhan_PPA_Cleanning;;
+		if [ $exitstatus = 0 ]; then
 
-		"INSTALL-INIT-SOFTWARES")
-			Initial_Install;;
+			case $OPTION in
 
-		"AUTOMATIC-UPDATE")
-			AUTOMATIC_UPDATE;;
+			"Orfhan-PPA-Cleanning")
+				Orfhan_PPA_Cleanning;;
 
-		"DOS-TITLE")
-			DOS_Update;;
+			"INSTALL-INIT-SOFTWARES")
+				Initial_Install;;
 
-		"DOS-LOAGING")
-			DOS-LOAGING;;
+			"AUTOMATIC-UPDATE")
+				AUTOMATIC_UPDATE;;
 
-		"DOS")
-			DOS;;
+			"DOS-TITLE")
+				DOS_Update;;
 
-		"SPEED TEST")
-			Internet_Test;;
+			"DOS-LOAGING")
+				DOS_LOAGING;;
 
-		esac
+			"DOS")
+				DOS;;
 
-	# if [ $exitstatus = 0 ]; then
-	# 	if [  $OPTION = "Orfhan-PPA-Cleanning" ]; then
+			"SPEED TEST")
+				Internet_Test;;
 
- #        	Orfhan_PPA_Cleanning
+			"FIREWALL")
+				ActiveFirewall;;
 
-	# 	elif [ $OPTION = "INSTALL-INIT-SOFTWARES" ]; then
-			
-	# 		Initial_Install
-			
-	# 	elif [ $OPTION = "AUTOMATIC-UPDATE" ]; then
-			
-	# 		AUTOMATIC_UPDATE
+			"RECOVERY")
+				sudo photorec;;
 
-	# 	elif [ $OPTION = "DOS-TITLE" ]; then
-			
-	# 		DOS_Update
-			
-	# 	elif [ $OPTION = "DOS-LOAGING" ]; then
+			esac
+		fi
 
-	# 		DOS_LOAGING
-
-	# 	elif [ $OPTION = "DOS" ]; then
-
-	# 		DOS
-
-	# 	elif [ $OPTION = "SPEED TEST" ]; then
-
-	# 		Internet_Test
-
-	# 	fi
-
-	else
-
-		whiptail --title "Process Error!" --msgbox "Process Canceled by the user.No action was taken." 8 78
-		echo -e "\n\n----------------------------------------------------------------------------------------------"
-		echo -e "\n\t\tProcess Error! \n\t\tProcess Canceled by the user. \n\t\tNo action was taken."
-		echo -e "\n----------------------------------------------------------------------------------------------\n\n"
-	fi
+	done
 	
 else
     whiptail --title "Process Error!" --msgbox "You must be root to continue the process, try again in the root environment." 8 78
@@ -413,4 +418,10 @@ else
 	echo -e "\n\tYou must be root to continue the process, try again in the root environment."
 	echo -e "\n----------------------------------------------------------------------------------------------\n\n"
 fi
+
+
+echo -e "\n----------------------------------------------------------------------------------------------"
+echo -e "\n\t\t\t\t SYSTEM INFORMATION		"
+echo -e "\n----------------------------------------------------------------------------------------------\n"
+screenfetch
 
