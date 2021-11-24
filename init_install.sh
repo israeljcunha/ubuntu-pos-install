@@ -61,3 +61,5 @@ sudo apt-get install --fix-missing
 sudo apt-get update
 sudo apt-get install traceroute
 sudo apt-get install inetutils-traceroute
+sudo apt-get update
+sudo apt-get install python3 python3-venv python3-pip
