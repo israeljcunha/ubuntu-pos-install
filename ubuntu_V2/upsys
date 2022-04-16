@@ -1,0 +1,129 @@
+#!/bin/bash
+res='	'PROCESS'	' 
+
+set_20g_swap(){
+	./subs/swap.sh
+}
+
+Initial_Install(){
+	./subs/base.sh
+	./subs/swap.sh
+}
+
+DOS_Update(){
+	./subs/dos_update.sh
+	./subs/orfhan.sh
+}
+
+Orfhan_PPA_Cleanning(){
+	./subs/orfhan.sh
+}
+
+AUTOMATIC_UPDATE(){
+	./subs/automatic_update.sh | whiptail --gauge "Please wait while the system updates..." 6 50 0
+	whiptail --title "Process completed!" --msgbox "The upgrade process has been completed, now the computer is clean and up to date." 8 78
+}
+
+# DOS_LOAGING(){
+# 	./subs/dos_load.sh
+# }
+
+# DOS(){
+# 	./subs/dos.sh
+# }
+
+ActiveFirewall(){
+	./subs/firewall.sh
+}
+
+Internet_Test() {
+	./subs/speedtest.sh
+}
+
+fixes() {
+	./subs/fix.sh
+}
+
+factory() {
+	./subs/fix.sh
+	./subs/reset_factory.sh
+}
+
+release_update_ubuntu(){
+	./subs/ubuntu_release_update.sh
+}
+
+if [ `whoami` = 'root' ]; then
+	while [[ $exitstatus -le "EXIT" ]]; do
+
+		OPTION=$(whiptail --title "MENU ACTION" --menu \
+		"Choose the update method." 30 95 20 \
+		"AUTOMATIC-UPDATE" "Shows only the load bar, without interaction." \
+		"DOS-UPDATE-TITLE" "Shows all processes separated by title, with interaction." \
+		"Orfhan-PPA-Cleanning" "List of applications for installation." \
+		"INSTALL-INIT-SOFTWARES" "List of applications for installation initial." \
+		"SPEED TEST" "Speed Test Network." \
+		"FIREWALL" "Active firewall and add ssh rules". \
+		"RECOVERY" "Recovery Files By Photorec (testdisk) ". \
+		"FIX" "Fix all system". \
+		"RESET_FACTORY" "Reset de Fábrica do Sistema". \
+		"SET-SWAP" "Add 20G on Swap Memory". \
+		"UPDATE RELEASE" "Update all system to new version system". \
+		3>&1 1>&2 2>&3)
+
+		exitstatus=$?
+		
+
+		if [ $exitstatus = 0 ]; then
+
+			case $OPTION in
+
+			"Orfhan-PPA-Cleanning")
+				Orfhan_PPA_Cleanning;;
+
+			"INSTALL-INIT-SOFTWARES")
+				Initial_Install;;
+
+			"AUTOMATIC-UPDATE")
+				AUTOMATIC_UPDATE;;
+
+			"DOS-UPDATE-TITLE")
+				DOS_Update;;
+
+			"SPEED TEST")
+				Internet_Test;;
+
+			"FIREWALL")
+				ActiveFirewall;;
+
+			"RECOVERY")
+				sudo photorec;;
+
+			"FIX")
+				fixes;;
+
+			"RESET_FACTORY")
+				factory;;
+
+			"SET-SWAP")
+				set_20g_swap;;
+
+			"UPDATE RELEASE")
+				release_update_ubuntu;;
+
+			esac
+		fi
+	done
+else
+    whiptail --title "Process Error!" --msgbox "You must be root to continue the process, try again in the root environment." 8 78
+	echo -e "\n\n----------------------------------------------------------------------------------------------"
+	echo -e "\n\tYou must be root to continue the process, try again in the root environment."
+	echo -e "\n----------------------------------------------------------------------------------------------\n\n"
+fi
+
+echo -e "\n----------------------------------------------------------------------------------------------"
+echo -e "\n\t\t\t\t SYSTEM INFORMATION		"
+echo -e "\n----------------------------------------------------------------------------------------------\n"
+neofetch
+
+
