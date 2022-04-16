@@ -166,6 +166,7 @@ sudo apt install libdvdcss2 -y
 sudo dpkg-reconfigure libdvd-dpkg -y
 sudo apt install unace rar unrar p7zip-rar p7zip sharutils uudeview mpack arj cabextract lzip lunzip plzip
 sudo apt install hardinfo
+sudo apt install htop
 
 echo "----------------------------------------------------------"
 echo " INSTALl DOCKER "
