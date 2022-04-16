@@ -2,6 +2,33 @@
 
 res='	'PROCESS'	' 
 
+
+set_swap(){
+	sudo swapon --show
+	free -h
+	df -h
+	sudo fallocate -l 20G /swapfile
+	ls -lh /swapfile
+	-rw-r--r-- 1 root root 20.0G Apr 25 11:14 /swapfile
+	sudo chmod 600 /swapfile
+	ls -lh /swapfile
+	sudo mkswap /swapfile
+	sudo swapon /swapfile
+	sudo swapon --show
+	free -h
+	sudo cp /etc/fstab /etc/fstab.bak
+	echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+	cat /proc/sys/vm/swappiness
+	sudo sysctl vm.swappiness=10
+	sudo pluma /etc/sysctl.conf
+
+
+	cat /proc/sys/vm/vfs_cache_pressure
+	sudo sysctl vm.vfs_cache_pressure=50
+	sudo pluma /etc/sysctl.conf
+}
+
+
 Initial_Install(){
 
 	echo -e "${newlinefinal}"
@@ -37,20 +64,124 @@ Initial_Install(){
 	echo -e "${newline}"
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 	sudo dpkg -i google-chrome-stable_current_amd64.deb 
-	
-	DOS_Update
-
-	echo -e "${newlinefinal}"
-	echo -e "${newline}"
-	echo "	=> INSTALL BRAVE BROWSER	"
-	echo -e "${newline}"
-	sudo apt install apt-transport-https curl
-	curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
-	echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-	sudo apt update
-	sudo apt install brave-browser
 
 	DOS_Update
+	sudo apt install screenfetch
+
+	sudo apt install breeze-cursor-theme
+	sudo snap install oxygen-cursors
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL LATEX 		"
+	echo "********************************************************************************************"
+	sudo apt-get update -y
+	sudo apt-get upgrade -y
+	sudo apt-get install -f -y
+	sudo apt-get autoremove -y
+	sudo apt-get clean -y
+	sudo apt-get autoclean -y
+	sudo apt-get install texlive texlive-latex-extra texlive-lang-portuguese -y
+	sudo apt-get install texlive-math-extra -y
+	sudo apt-get install texlive-full -y
+
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL ATOM 		"
+	echo "********************************************************************************************"
+	sudo apt-get update -y
+	sudo apt-get install atom -y
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL SQLITE_DB 		"
+	echo "********************************************************************************************"
+	sudo apt-get install sqlite3 -y
+	sudo apt-get install libsqlite3-dev -y
+	sudo apt-get install sqlitebrowser -y
+
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL EVERNOTE - MIXNOTE2 		"
+	echo "********************************************************************************************"
+	sudo apt-get update -y
+	sudo apt-get install nixnote2 -y
+	sudo apt-get update -y
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL GIT 		"
+	echo "********************************************************************************************"
+	sudo apt-get install git -y
+	sudo apt-get update -y
+
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL NOTEPAD 		"
+	echo "********************************************************************************************"
+
+	sudo apt-get update -y 
+	sudo apt-get install notepadqq -y
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL Other APPS 		"
+	echo "********************************************************************************************"
+
+	sudo apt install zsh
+	sudo apt install curl wget git
+	sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+	-rw-r--r--  1 tecmint tecmint  3538 Oct 27 02:40 .zshrc
+
+	sudo apt install -f
+
+	sudo apt install speedtest-cli
+	sudo snap install brave
+	sudo snap install pycharm-community --classic
+	sudo snap install sublime-text --classic
+	sudo snap install postman
+	sudo snap install insomnia
+	sudo snap install jupyter
+	sudo snap install code --classic
+	sudo snap install dbeaver-ce
+	sudo snap install sqlitebrowser
+	sudo snap install notepadqq
+
+	sudo apt install -f
+
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL flathub 		"
+	echo "********************************************************************************************"
+
+	sudo apt install flatpak
+	sudo apt install gnome-software-plugin-flatpak
+	flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL flathub software 		"
+	echo "********************************************************************************************"
+
+	flatpak install flathub org.audacityteam.Audacity
+	flatpak install flathub io.brackets.Brackets
+	flatpak install flathub org.gnome.Builder
+	# flatpak install flathub io.dbeaver.DBeaverCommunity
+	flatpak install flathub io.github.gitahead.GitAhead
+	flatpak install flathub io.github.shiftey.Desktop
+	flatpak install flathub com.jgraph.drawio.desktop
+	flatpak install flathub com.discordapp.Discord
+	flatpak install flathub com.valvesoftware.Steam
+	flatpak install flathub org.telegram.desktop
+	flatpak install flathub us.zoom.Zoom
+	flatpak install flathub io.github.wereturtle.ghostwriter
+	flatpak install flathub com.github.marktext.marktext
+	flatpak install flathub net.xmind.ZEN
+	flatpak install flathub com.gitlab.davem.ClamTk
+	flatpak install flathub nz.mega.MEGAsync
+	flatpak install flathub io.bit3.WhatsAppQT
+
+	echo "********************************************************************************************"
+	echo "	=> INSTALL SWAP		"
+	echo "********************************************************************************************"
+
+	set_swap
 }
 
 
@@ -134,6 +265,8 @@ DOS_Update(){
 
 	echo -e "${newlinefinal}"
 
+	Orfhan_PPA_Cleanning
+
 }
 
 
@@ -161,6 +294,9 @@ Orfhan_PPA_Cleanning(){
 	sudo apt-get update 
 	sudo apt-get upgrade 
 
+	sudo apt-get full-upgrade
+	sudo rm -rf /var/cache/snapd  
+	sudo apt-get autoremove
 }
 
 
@@ -267,6 +403,7 @@ DOS(){
 	sudo apt-get update 
 	sudo apt-get upgrade 
 	# profile-cleaner f 
+	Orfhan_PPA_Cleanning
 	
 }
 
@@ -424,4 +561,5 @@ echo -e "\n---------------------------------------------------------------------
 echo -e "\n\t\t\t\t SYSTEM INFORMATION		"
 echo -e "\n----------------------------------------------------------------------------------------------\n"
 screenfetch
+
 

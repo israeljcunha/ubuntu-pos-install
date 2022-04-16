@@ -1,10 +1,8 @@
 clear
 
-echo "********************************************************************************************"
-echo "	=> INSTALL PYCHARM 		"
-echo "********************************************************************************************"
-sudo apt-get update -y
-sudo snap install pycharm-community --classic
+
+sudo apt install breeze-cursor-theme
+sudo snap install oxygen-cursors
 
 echo "********************************************************************************************"
 echo "	=> INSTALL LATEX 		"
@@ -18,6 +16,7 @@ sudo apt-get autoclean -y
 sudo apt-get install texlive texlive-latex-extra texlive-lang-portuguese -y
 sudo apt-get install texlive-math-extra -y
 sudo apt-get install texlive-full -y
+
 
 echo "********************************************************************************************"
 echo "	=> INSTALL ATOM 		"
@@ -50,16 +49,29 @@ sudo apt-get update -y
 echo "********************************************************************************************"
 echo "	=> INSTALL NOTEPAD 		"
 echo "********************************************************************************************"
+
 sudo apt-get update -y 
 sudo apt-get install notepadqq -y
 
-echo "********************************************************************************************"
-echo "	=> INSTALL OTHERS APPS 		"
-echo "********************************************************************************************"
-sudo apt install net-tools
-sudo apt-get install --fix-missing  
-sudo apt-get update
-sudo apt-get install traceroute
-sudo apt-get install inetutils-traceroute
-sudo apt-get update
-sudo apt-get install python3 python3-venv python3-pip
+flatpak install flathub org.audacityteam.Audacity
+flatpak install flathub io.brackets.Brackets
+flatpak install flathub org.gnome.Builder
+flatpak install flathub io.dbeaver.DBeaverCommunity
+flatpak install flathub io.github.gitahead.GitAhead
+flatpak install flathub io.github.shiftey.Desktop
+flatpak install flathub com.jgraph.drawio.desktop
+flatpak install flathub com.discordapp.Discord
+flatpak install flathub com.valvesoftware.Steam
+flatpak install flathub org.telegram.desktop
+flatpak install flathub us.zoom.Zoom
+flatpak install flathub io.github.wereturtle.ghostwriter
+flatpak install flathub com.github.marktext.marktext
+flatpak install flathub net.xmind.ZEN
+flatpak install flathub com.gitlab.davem.ClamTk
+flatpak install flathub nz.mega.MEGAsync
+flatpak install flathub io.bit3.WhatsAppQT
+sudo apt install zsh
+sudo apt install curl wget git
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+-rw-r--r--  1 tecmint tecmint  3538 Oct 27 02:40 .zshrc
+
