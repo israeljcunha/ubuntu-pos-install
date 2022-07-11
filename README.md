@@ -1,4 +1,4 @@
-# Commands for Linux
+# Ubuntu Pós Install
 
 [![Build Status](https://travis-ci.org/israelcunha/commands_for_linux.svg?branch=master)](https://travis-ci.org/israelcunha/commands_for_linux)
 
